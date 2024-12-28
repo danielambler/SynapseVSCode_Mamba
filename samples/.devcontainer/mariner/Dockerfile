@@ -26,8 +26,9 @@ RUN tdnf install -y openssh-server nc \
  && sed -i 's/\#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
 # Install PySpark in the base Conda environment
+RUN conda install -c conda-forge mamba # Install Mamba
 ENV SPARK_VERSION=3.4.1
-RUN conda install -c conda-forge pyspark==$SPARK_VERSION
+RUN mamba install -c conda-forge pyspark==${SPARK_VERSION} # Use Mamba
 
 # Generate new host keys
 RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key && \
